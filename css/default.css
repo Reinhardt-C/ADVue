@@ -1,0 +1,35 @@
+.bblue {
+	border-color: #4980CC;
+	background-color: #E0E0E0;
+	color: black;
+	transition-duration: 0.2s;
+}
+
+.bblue:hover {
+	background-color: #4980CC;
+	color: white;
+}
+
+.bred {
+	border-color: #B84B5F;
+	background-color: #A3A3A3;
+	color: black;
+	transition-duration: 0.2s;
+}
+
+.bred:hover {
+	background-color: #B84B5F;
+	color: black;
+}
+
+.bgreen {
+	border-color: #127A20;
+	background-color: #F2F2F2;
+	color: black;
+	transition-duration: 0.2s;
+}
+
+.bgreen:hover {
+	background-color: #5AC467;
+	color: black;
+}

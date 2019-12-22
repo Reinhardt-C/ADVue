@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Antimatter Dimensions: Vue Edition</title>
+		<link rel='stylesheet' href='css/stylesheet.css'>
+		<link rel='stylesheet' href='css/default.css' id='theme'>
+	</head>
+	
+	<body>
+		<div id='app'>
+			<div id='popups'>
+				<popup
+					v-for='popup in popups'
+					v-bind:text='popup.text'
+					v-bind:color='popup.color'
+					v-bind:key='popup.key'
+				></popup>
+			</div>
+			<section id='resBox'>
+				You have <span id='AM'>{{ dispAntimatter }}</span> antimatter<br>
+				You are getting  {{ aps }} antimatter per second<br><br>
+				Reduce tick interval by {{ f(tickDecrement().sub(1).abs().mul(100)) }}%<br>
+				<button class='styledButton tickb' v-bind:class='{bgreen: canBuyTick(), bred: !canBuyTick()}' v-on:click='buyTick()'>Cost: {{ f(tickcost()) }}</button>
+				<button class='styledButton tickb' v-bind:class='{bgreen: canBuyTick(), bred: !canBuyTick()}' v-on:click='buyMaxTick()'>Buy Max</button><br>
+				Tickspeed: {{ f(tps(), 2) }}
+				<br>
+			</section>
+			<nav>
+				<button v-on:click='tabTo(0)' class='styledButton bblue'>Dimensions</button>
+				<button v-on:click='tabTo(1)' class='styledButton bblue'>Options</button>
+				<button v-on:click='tabTo(2)' class='styledButton bblue'>Statistics</button>
+				<button v-on:click='tabTo(3)' class='styledButton bblue'>Achievements</button>
+			</nav>
+			<div v-if='tab == 0'>
+				<button onclick='maxAll()' class='styledButton bblue tickb' style='margin: 5px;'>Max All [M]</button>
+				<div id='dimdiv'>
+					<dim
+						v-for='dimension in $data.dimensions'
+						v-bind:dimension='dimension'
+						v-bind:key='dimension.dim'
+						v-bind:mult='dimension.dispMult'
+					></dim>
+					<table id='littleprestige'>
+						<tr>
+							<td>
+								<p>Dimension {{ sob() }}s ({{ f(dimshifts) }}): requires {{ f(shiftCost()[0], 0) }} {{ shiftCost()[1] + 1 }}th Dimensions&nbsp;&nbsp;&nbsp;</p>
+							</td>
+							<td>
+								<button class='styledButton' v-on:click='shift' v-bind:class='{bgreen: canShift(), bred: !canShift()}'>{{ shiftButton() }}</button>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Antimatter Galaxies ({{ f(galaxies) }}): requires {{ f(galaxycost(), 0) }} Eighth Dimensions
+							</td>
+							<td>
+								<button id='galaxybuy' v-on:click='galaxy' class='styledButton' v-bind:class='{bgreen: canGalaxy(), bred: !canGalaxy()}'>Lose all your previous progress, but get a tickspeed boost</button>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div v-if='tab == 1'><br>
+				<flexbox>
+					<button class='styledButton bblue' onclick='save()'>Save</button>
+					<button class='styledButton bblue' onclick='load()'>Load</button>
+					<button class='styledButton' v-on:click='toggleas' v-bind:class='{bgreen: autosave, bred: !autosave}'>Autosave: {{ autosave ? 'Enabled' : 'Disabled' }}</button>
+					<input class='styledButton bgreen' v-if='autosave' v-model='autosaveintv'></input>
+					<button class='styledButton bred' onclick='wipe()'>Hard Reset</button>
+				</flexbox>
+			</div>
+			<div v-if='tab == 2'><br>
+				You have {{ dispAntimatter }} antimatter<br>
+				You have made a total of {{ dispTotalAntimatter }} antimatter<br><br>
+				You have dimensional shift/boosted {{ dimshifts }} time{{ dimshifts != 1 ? 's' : '' }}
+			</div>
+			<div v-if='tab == 3'><br>
+				<p v-if='achUnlocked() > 7'>You've unlocked {{ achUnlocked() }} achievements, giving a {{ f(achBonus()) }}&times; boost to all dimensions</p>
+				<flexbox>
+					<achievement
+						v-for='achievement in achievements'
+						v-bind:achievement='achievement'
+						v-bind:key='achievement.id'
+					></achievement>
+				</flexbox>
+			</div>
+		</div>
+		
+		<!-- Libraries -->
+		<script src='js/vue.js'></script>
+		<script src='js/OmegaNum.js'></script>
+		<script src='js/notation.js'></script>
+		
+		<!-- Helper JS -->
+		<script src='js/function.js'></script>
+		<script src='js/dimension.js'></script>
+		<script src='js/achievement.js'></script>
+		<script src='js/save.js'></script>
+		
+		<!-- Main JS File -->
+		<script src='js/main.js'></script>
+		
+		<!-- Start Everything -->
+		<script>
+			init();
+		</script>
+	</body>
+</html>
