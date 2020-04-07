@@ -8,7 +8,7 @@ function load() {
 	if (localStorage.getItem('advsave') != null) {
 		let save = JSON.parse(atob(localStorage.getItem('advsave')));
 		app.antimatter = n(save.antimatter || 0);
-		for (let i = 0; i < 11; i++) {
+		for (let i = 0; i < 8; i++) {
 			app.dimensions[i] = d(save.dimensions[i]);
 		}
 		for (let i in save.achievements) {
