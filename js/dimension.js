@@ -9,8 +9,8 @@ Vue.component('dim', {
 	</table>`
 })
 
-const PRICES = [10, 100, 10000, 1e6, 1e9, 1e13, 1e18, 1e24;
-const INCREASE = [1000, 10000, 1e5, 1e6, 1e8, 1e10, 1e12, 1e15;
+const PRICES = [10, 100, 10000, 1e6, 1e9, 1e13, 1e18, 1e24];
+const INCREASE = [1000, 10000, 1e5, 1e6, 1e8, 1e10, 1e12, 1e15];
 
 class Dimension {
 	constructor(dim, bought = 0, amount = 0) {
@@ -25,7 +25,8 @@ class Dimension {
 	}
 	
 	get mult() {
-		return Decimal.pow(2, this.bought.div(10).floor().add(app.dimshifts.sub(this.dim).max(0)));
+		if (app.dimshifts) return Decimal.pow(2, this.bought.div(10).floor().add(app.dimshifts.sub(this.dim).max(0)));
+		return Decimal(1);
 	}
 	
 	get dispMult() {

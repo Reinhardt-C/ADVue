@@ -1,12 +1,12 @@
 function save(source = 'auto') {
-	localStorage.setItem('mtheorysave', btoa(JSON.stringify(app.$data)));
+	localStorage.setItem('advsave', btoa(JSON.stringify(app.$data)));
 	new Popup('Game Saved', 'yellow');
 	if (source == 'auto' && app.autosave) setTimeout(save, parseFloat(app.autosaveintv) * 1000);
 }
 
 function load() {
-	if (localStorage.getItem('mtheorysave') != null) {
-		let save = JSON.parse(atob(localStorage.getItem('mtheorysave')));
+	if (localStorage.getItem('advsave') != null) {
+		let save = JSON.parse(atob(localStorage.getItem('advsave')));
 		app.antimatter = n(save.antimatter || 0);
 		for (let i = 0; i < 11; i++) {
 			app.dimensions[i] = d(save.dimensions[i]);

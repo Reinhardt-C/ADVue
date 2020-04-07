@@ -1,6 +1,8 @@
 let Decimal = OmegaNum;
 
-let app = new Vue({
+let app = {notation: 'sci'};
+
+app = new Vue({
 	el: '#app',
 	data: {
 		tab: 0,
@@ -16,7 +18,7 @@ let app = new Vue({
 			new Dimension(4),
 			new Dimension(5),
 			new Dimension(6),
-			new Dimension(7))
+			new Dimension(7)
 		],
 		tickbuys: Decimal(0),
 		dimshifts: Decimal(0),
@@ -48,8 +50,12 @@ let app = new Vue({
 		sob: function() {return (this.dimshifts.lt(4) ? 'Shift' : 'Boost')},
 		shiftButton: function() {return (this.dimshifts.lt(4) ? 'Reset the game for a new dimension' : 'Reset the game for a boost')},
 		shiftCost: function() {
-			if (app.dimshifts.lt(5)) return [n(20), app.dimshifts.toNumber() + 3];
-			else return [n(20).add(Decimal.mul(15, app.dimshifts.sub(4))), 7];
+			if (app.dimshifts) {
+				if (app.dimshifts.lt(5)) return [n(20), app.dimshifts.toNumber() + 3];
+				else return [n(20).add(Decimal.mul(15, app.dimshifts.sub(4))), 7];
+			} else {
+				return n(Infinity);
+			}
 		},
 		canShift: function() {return this.dimensions[this.shiftCost()[1]].amount.gte(this.shiftCost()[0])},
 		shift: function() {
